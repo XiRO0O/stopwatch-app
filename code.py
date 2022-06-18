@@ -14,13 +14,14 @@ def create_window():
     return sg.Window(
         'StopWatch',
         layout,
-        size = (400,400),
+        size = (400,800),
         no_titlebar = True,
         element_justification = 'center')
 
 window = create_window()
 start_time = 0
 active = False
+lap_amount = 1
 
 while True:
     event, values = window.read(timeout = 10)
@@ -37,6 +38,7 @@ while True:
                 window.close()
                 window = create_window()
                 start_time = 0
+                lap_amount = 1
             else:
                 start_time = time()
                 active = True
@@ -48,6 +50,6 @@ while True:
         window['-TIME-'].update(elapsed_time)
 
     if event == '-LAP-':
-        window.extend_layout(window['-LAPS-'], [[sg.Text('1'),sg.VSeparator(),sg.Text('time')]])
-
+        window.extend_layout(window['-LAPS-'], [[sg.Text(lap_amount, font = 'Impact 10'),sg.VSeparator(),sg.Text(elapsed_time, font = 'Impact 10')]])
+        lap_amount += 1
 window.close()
