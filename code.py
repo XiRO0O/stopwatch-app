@@ -9,6 +9,7 @@ def create_window():
         [sg.Text('TIME', font = 'Impact 100', key = '-TIME-')],
         [sg.Button('Start', button_color = ('#FFFFFF','#666666'), font = 'Impact 15', border_width = 0, key = '-START-'),
         sg.Button('Lap', button_color = ('#FFFFFF','#666666'), font = 'Impact 15', border_width = 0, key = '-LAP-', visible = False)],
+        [sg.Column([[]], key = '-LAPS-')],
         [sg.VPush()]]
     return sg.Window(
         'StopWatch',
@@ -45,5 +46,8 @@ while True:
     if active:
         elapsed_time = round(time() - start_time,1)
         window['-TIME-'].update(elapsed_time)
+
+    if event == '-LAP-':
+        window.extend_layout(window['-LAPS-'], [[sg.Text('1'),sg.VSeparator(),sg.Text('time')]])
 
 window.close()
